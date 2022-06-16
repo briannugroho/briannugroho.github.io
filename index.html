@@ -1,56 +1,137 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="calculator.css">
-    <title>Calculator</title>
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="calculator">
-            <input type="text" placeholder="0" id="output-screen">
-            <button onclick="bersihkan()">C1</button>
-            <button onclick="del()">Del</button>
-            <button onclick="display('%')">%</button>
-            <button onclick="display('/')">/</button>
-            <button onclick="display('7')">7</button>
-            <button onclick="display('8')">8</button>
-            <button onclick="display('9')">9</button>
-            <button onclick="display('*')">*</button>
-            <button onclick="display('4')">4</button>
-            <button onclick="display('5')">5</button>
-            <button onclick="display('6')">6</button>
-            <button onclick="display('-')">-</button>
-            <button onclick="display('1')">1</button>
-            <button onclick="display('2')">2</button>
-            <button onclick="display('3')">3</button>
-            <button onclick="display('+')">+</button>
-            <button onclick="display('.')">.</button>
-            <button onclick="display('0')">0</button>
-            <button onclick="calculator()" class="hasil">=</button>
+    <div class="slider">
+        <div class="slide active">
+            <img src="31.png" alt="">
+            <div class="info">
+                <h2>Selamat ulang tahun Tias</h2>
+                <p>Maaf yaa malam-malam gini ganggu waktu tidur kamu,Semoga semakin bertambahnya umurmu semakin dewasa dan selalu mendapat rahmat Allah.Diberikan kesehatan dan diberkahi umur yang panjang.Semoga selalu bahagia dan diberi rezeki yang barokah.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <img src="21.png" alt="">
+            <div class="info">
+                <h2>Barakallah fii umrik</h2>
+                <p>Semoga dimudahkan dalam belajar dan mengerjakan tugas kuliah.Semangat ngerjain tugas-tugasnya tapi jangan keseringan begadang yaa.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <img src="41.png" alt="">
+            <div class="info">
+                <h2>Happy birthday</h2>
+                <p>Semoga apa yang Tias rencanakan kedepanya selalu dimudahkan jalannya oleh Allah.Tetap semangat dan jangan mudah menyerah meraih mimpi karena pasti banyak rintangan didepan yang harus ditaklukan.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <img src="51.png" alt="">
+            <div class="info">
+                <h2>Otanjobi omedeto gozaimasu</h2>
+                <p>Dan harus yakin setiap usaha yang kita lakukan dan doa yang kita panjatkan pasti akan membuahkan hasil yang baik.Semoga apa yang Tias cita-citakan dapat tercapai....aminn</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <img src="Birthday.png" alt="">
+        </div>
+        <div class="navigation">
+          <i class="fas fa-chevron-left prev-btn">prev</i>
+          <i class="fas fa-chevron-right next-btn">next</i>
+        </div>
+        <div class="navigation-visibility">
+            <div class="slide-icon active"></div>
+            <div class="slide-icon"></div>
+            <div class="slide-icon"></div>
+            <div class="slide-icon"></div>
+            <div class="slide-icon"></div>
         </div>
     </div>
-    <script>
-        let outputscreen = document.getElementById("output-screen")
-        function display(num){
-            outputscreen.value +=num;
+    <script type="text/javascript"> 
+    const slider = document.querySelector(".slider");
+    const nextBtn = document.querySelector(".next-btn");
+    const prevBtn = document.querySelector(".prev-btn");
+    const slides = document.querySelectorAll(".slide");
+    const slideIcons = document.querySelectorAll(".slide-icon");
+    const numberOfSlides = slides.length;
+    var slideNumber = 0;
+
+    //image slider next button
+    nextBtn.addEventListener("click", () => {
+        slides.forEach((slide) => {
+            slide.classList.remove("active");
+        });
+        slideIcons.forEach((slideIcons) => {
+            slideIcons.classList.remove("active");
+        });
+        slideNumber++;
+
+        if(slideNumber > (numberOfSlides - 1)){
+            slideNumber = 0;
         }
-        function calculator(){
-            try{
-                outputscreen.value = eval(outputscreen.value);
-            }
-            catch(err){
-                alert("invalid")
-            }
+
+        slides[slideNumber].classList.add("active");
+        slideIcons[slideNumber].classList.add("active");
+    });
+    //image slider previus button
+    prevBtn.addEventListener("click", () => {
+        slides.forEach((slide) => {
+            slide.classList.remove("active");
+        });
+        slideIcons.forEach((slideIcons) => {
+            slideIcons.classList.remove("active");
+        });
+        slideNumber--;
+
+        if(slideNumber < 0){
+            slideNumber = numberOfSlides -1;
         }
-        function bersihkan(){
-            outputscreen.value = "";
+
+        slides[slideNumber].classList.add("active");
+        slideIcons[slideNumber].classList.add("active");
+    });
+
+    //image slider autoplay
+    var playSlide;
+
+    var repeater = () => {
+        playSlide = setInterval(function(){
+            slides.forEach((slide) => {
+            slide.classList.remove("active");
+        });
+        slideIcons.forEach((slideIcons) => {
+            slideIcons.classList.remove("active");
+        });
+        slideNumber++;
+
+        if(slideNumber > (numberOfSlides - 1)){
+            slideNumber = 0;
         }
-        function del(){
-            outputscreen.value = outputscreen.value.slice(0,-1);
-        }
+
+        slides[slideNumber].classList.add("active");
+        slideIcons[slideNumber].classList.add("active");
+        }, 4000);
+    }
+    repeater();
+    //stop image slider
+    slider.addEventListener("mouseover", () => {
+    clearInterval(playSlide);
+    });
+    //start again 
+    slider.addEventListener("mouseout", () => {
+        repeater();
+    });
     </script>
 </body>
 </html>
